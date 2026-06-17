@@ -54,4 +54,12 @@ public class ProductService {
                 product.getPrice()
         );
     }
+
+    @Transactional
+    public void delete(Long id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다."));
+
+        productRepository.delete(product);
+    }
 }
