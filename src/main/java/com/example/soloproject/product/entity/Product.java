@@ -37,4 +37,9 @@ public class Product {
     public int getPrice() {
         return price;
     }
+
+    public void update(String name, int price) {
+        this.name = name;
+        this.price = price;
+    }
 }

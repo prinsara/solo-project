@@ -2,6 +2,7 @@ package com.example.soloproject.product.service;
 
 import com.example.soloproject.product.dto.ProductCreateRequest;
 import com.example.soloproject.product.dto.ProductResponse;
+import com.example.soloproject.product.dto.ProductUpdateRequest;
 import com.example.soloproject.product.entity.Product;
 import com.example.soloproject.product.repository.ProductRepository;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,20 @@ public class ProductService {
     public ProductResponse findById(Long id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다."));
+
+        return new ProductResponse(
+                product.getId(),
+                product.getName(),
+                product.getPrice()
+        );
+    }
+
+    @Transactional
+    public ProductResponse update(Long id, ProductUpdateRequest request) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다."));
+
+        product.update(request.name(), request.price());
 
         return new ProductResponse(
                 product.getId(),

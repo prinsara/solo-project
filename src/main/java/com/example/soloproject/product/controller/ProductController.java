@@ -2,11 +2,13 @@ package com.example.soloproject.product.controller;
 
 import com.example.soloproject.product.dto.ProductCreateRequest;
 import com.example.soloproject.product.dto.ProductResponse;
+import com.example.soloproject.product.dto.ProductUpdateRequest;
 import com.example.soloproject.product.service.ProductService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -32,5 +34,10 @@ public class ProductController {
     @GetMapping("/{id}")
     public ProductResponse findById(@PathVariable Long id) {
         return productService.findById(id);
+    }
+
+    @PutMapping("/{id}")
+    public ProductResponse update(@PathVariable Long id, @RequestBody ProductUpdateRequest request) {
+        return productService.update(id, request);
     }
 }
