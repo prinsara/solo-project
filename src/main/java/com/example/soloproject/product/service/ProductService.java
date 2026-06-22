@@ -1,5 +1,7 @@
 package com.example.soloproject.product.service;
 
+import com.example.soloproject.admin.entity.Admin;
+import com.example.soloproject.admin.repository.AdminRepository;
 import com.example.soloproject.product.dto.ProductCreateRequest;
 import com.example.soloproject.product.dto.ProductResponse;
 import com.example.soloproject.product.dto.ProductUpdateRequest;
@@ -12,14 +14,20 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final AdminRepository adminRepository;
 
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository, AdminRepository adminRepository) {
         this.productRepository = productRepository;
+        this.adminRepository = adminRepository;
     }
 
     @Transactional
     public ProductResponse create(ProductCreateRequest request) {
+        Admin admin = adminRepository.findById(request.adminId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 관리자가 없습니다."));
+
         Product product = new Product(request.name(), request.price());
+        product.assignAdmin(admin);
         Product savedProduct = productRepository.save(product);
 
         return new ProductResponse(
