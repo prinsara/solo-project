@@ -25,7 +25,8 @@ public class ProductService {
         return new ProductResponse(
                 savedProduct.getId(),
                 savedProduct.getName(),
-                savedProduct.getPrice()
+                savedProduct.getPrice(),
+                getAdminName(savedProduct)
         );
     }
 
@@ -37,7 +38,8 @@ public class ProductService {
         return new ProductResponse(
                 product.getId(),
                 product.getName(),
-                product.getPrice()
+                product.getPrice(),
+                getAdminName(product)
         );
     }
 
@@ -51,7 +53,8 @@ public class ProductService {
         return new ProductResponse(
                 product.getId(),
                 product.getName(),
-                product.getPrice()
+                product.getPrice(),
+                getAdminName(product)
         );
     }
 
@@ -61,5 +64,13 @@ public class ProductService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다."));
 
         productRepository.delete(product);
+    }
+
+    private String getAdminName(Product product) {
+        if (product.getAdmin() == null) {
+            return null;
+        }
+
+        return product.getAdmin().getName();
     }
 }
