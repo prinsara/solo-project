@@ -16,11 +16,14 @@ public class Admin {
 
     private String name;
 
+    private String password;
+
     protected Admin() {
     }
 
-    public Admin(String name) {
+    public Admin(String name, String password) {
         this.name = name;
+        this.password = password;
     }
 
     public Long getId() {
@@ -29,5 +32,9 @@ public class Admin {
 
     public String getName() {
         return name;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }

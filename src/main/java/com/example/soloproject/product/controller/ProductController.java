@@ -39,6 +39,7 @@ public class ProductController {
         return productService.findById(id);
     }
 
+    //목록 조회
     @GetMapping
     public Page<ProductResponse> findAll(
             @RequestParam(defaultValue = "0") int page,
