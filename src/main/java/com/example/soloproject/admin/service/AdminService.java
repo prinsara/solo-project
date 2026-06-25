@@ -1,5 +1,6 @@
 package com.example.soloproject.admin.service;
 
+import com.example.soloproject.admin.dto.AdminLoginRequest;
 import com.example.soloproject.admin.dto.AdminResponse;
 import com.example.soloproject.admin.dto.AdminSignupRequest;
 import com.example.soloproject.admin.entity.Admin;
@@ -29,5 +30,17 @@ public class AdminService {
         Admin savedAdmin = adminRepository.save(admin);
 
         return new AdminResponse(savedAdmin.getId(), savedAdmin.getName());
+    }
+
+    @Transactional(readOnly = true)
+    public AdminResponse login(AdminLoginRequest request) {
+        Admin admin = adminRepository.findByName(request.name())
+                .orElseThrow(() -> new IllegalArgumentException("아이디 또는 비밀번호가 일치하지 않습니다."));
+
+        if (!passwordEncoder.matches(request.password(), admin.getPassword())) {
+            throw new IllegalArgumentException("아이디 또는 비밀번호가 일치하지 않습니다.");
+        }
+
+        return new AdminResponse(admin.getId(), admin.getName());
     }
 }
