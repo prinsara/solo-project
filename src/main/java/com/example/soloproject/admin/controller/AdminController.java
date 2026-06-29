@@ -37,4 +37,10 @@ public class AdminController {
 
         return response;
     }
+
+    @PostMapping("/logout")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void logout(HttpSession session) {
+        session.invalidate();
+    }
 }
