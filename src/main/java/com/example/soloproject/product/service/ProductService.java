@@ -24,8 +24,8 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductResponse create(ProductCreateRequest request) {
-        Admin admin = adminRepository.findById(request.adminId())
+    public ProductResponse create(ProductCreateRequest request, Long adminId) {
+        Admin admin = adminRepository.findById(adminId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 관리자가 없습니다."));
 
         Product product = new Product(request.name(), request.price());
